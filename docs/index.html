@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare sealed bids and generate a zero-knowledge proof of the lowest-cost award.">
+  <meta name="theme-color" content="#f4f0fa">
+  <script src="appearance.js"></script>
+  <title>Sealed Assignment | Proof Studio</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="auction.css">
+  <script src="backdrop.js" defer></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body data-view="login">
+  <div class="backdrop" aria-hidden="true">
+    <div class="robot-screen">
+      <video src="assets/mainframe.mp4" muted playsinline preload="auto"></video>
+      <div class="robot-gaze"><i class="robot-eye"></i><i class="robot-eye"></i><i class="robot-smile"></i></div>
+    </div>
+  </div>
+  <a id="skip-workspace" class="skip" href="#workspace">Skip to workspace</a>
+  <aside class="rail" hidden>
+    <a class="brand" href="#home" aria-label="Sealed Assignment home"><span class="mark" aria-hidden="true"></span><span>SEALED<span>ASSIGNMENT</span></span></a>
+    <nav class="routes" aria-label="Workspace navigation">
+      <a href="#home" data-route="home"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3zM9 20v-6h6v6"/></svg><span>Overview</span></a>
+      <a href="#auction" data-route="auction"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m14 4 6 6-3 3-6-6Zm-4 4 6 6-3 3-6-6Zm-3 4-4 4 3 3 4-4m2 5h9"/></svg><span>Auction Lab</span></a>
+      <a href="#studio" data-route="studio"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M9 9v11m6-11v11M3 14.5h18"/></svg><span>Bid matrix</span></a>
+      <a href="#compare" data-route="compare"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16l-4-4m4 14H4l4 4M4 7l3 3m13 7-3-3"/></svg><span>Compare</span></a>
+      <a href="#verify" data-route="verify"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2.4 2 5 2.7 8 3v5c0 4.7-2.7 7.9-8 10-5.3-2.1-8-5.3-8-10V6c3-.3 5.6-1 8-3Z"/><path d="m8.5 12 2.3 2.3 4.7-4.8"/></svg><span>Verifier</span></a>
+      <a href="#receipt" data-route="receipt"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-3.5-2-3.5 2-3.5-2L5 21ZM8.5 8h7m-7 4h7"/></svg><span>Receipt</span></a>
+      <a href="#history" data-route="history"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4v5h5M3.5 9a8.5 8.5 0 1 1 .9 8M12 7.5v5l3 1.8"/></svg><span>History</span></a>
+      <a href="#protocol" data-route="protocol"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg><span>Protocol</span></a>
+    </nav>
+    <div class="rail-foot"><span class="light" aria-hidden="true"></span><span>Proofs run in<br>your browser</span></div>
+  </aside>
+
+  <main id="workspace" tabindex="-1">
+    <header class="context">
+      <span>Sealed Assignment <span class="slash" aria-hidden="true">/</span> <strong id="current-view">Sign in</strong></span>
+      <div class="context-tools">
+        <span class="context-status"><span class="light" aria-hidden="true"></span> NEAR prototype</span>
+        <button id="pointer-toggle" class="theme-toggle" type="button" aria-label="Cursor glow" aria-pressed="true" hidden>Cursor glow</button>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false" title="Switch appearance"><span class="theme-icon sun" aria-hidden="true">☀</span><span class="theme-icon moon" aria-hidden="true">◐</span><span id="theme-label">Light</span></button>
+        <a class="theme-toggle" id="leave-workspace" href="/signout-with-chatgpt?return_to=%2F%23login" target="_top" hidden>Sign out</a>
+      </div>
+    </header>
+
+    <section id="home" class="view overview" aria-labelledby="home-heading" hidden>
+      <div class="overview-copy">
+        <p class="eyebrow">ZERO-KNOWLEDGE PROCUREMENT</p>
+        <h1 id="home-heading">Private bids.<br><em>Public proof.</em></h1>
+        <p class="intro">Prove that the lowest-cost team won while keeping unused bids private.</p>
+        <nav class="view-actions" aria-label="Proof Studio shortcuts">
+          <a class="button primary" href="#auction">Run sample auction <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="#studio">Open bid matrix</a>
+          <a class="button secondary" href="#verify">Verify a receipt</a>
+          <a class="button secondary" href="#protocol">How it works</a>
+        </nav>
+      </div>
+    </section>
+
+    <section id="auction" class="view auction" aria-labelledby="auction-heading" hidden>
+      <header class="panel auction-hero">
+        <p class="eyebrow">PRIVACY &amp; PRIVATE AI</p>
+        <h1 id="auction-heading">Prove the award<span>.</span></h1>
+        <p>Three providers bid for three jobs. Find the cheapest valid assignment and see what happens when someone changes a payout.</p>
+        <div class="view-actions">
+          <button class="button primary" type="button" id="auction-start">Run sample auction <span aria-hidden="true">↗</span></button>
+          <a class="button secondary" href="#studio">Try your own bids</a>
+        </div>
+      </header>
+
+      <ol class="auction-steps" aria-label="Sample auction progress">
+        <li aria-current="step"><span>01</span><strong>Bids</strong><small>One job per provider</small></li>
+        <li><span>02</span><strong>Award</strong><small>Lowest valid total</small></li>
+        <li><span>03</span><strong>Proof</strong><small>Verify and test a change</small></li>
+        <li><span>04</span><strong>Settlement</strong><small>Inspect NEAR evidence</small></li>
+      </ol>
+
+      <div class="auction-grid">
+        <article class="panel auction-card">
+          <header class="auction-card-head"><h2>Sample bids</h2><span class="unit">milliNEAR</span></header>
+          <table class="auction-bids">
+            <caption class="sr-only">Synthetic bids for three jobs</caption>
+            <thead><tr><th scope="col">Provider</th><th scope="col">Job 01</th><th scope="col">Job 02</th><th scope="col">Job 03</th></tr></thead>
+            <tbody id="auction-bids"></tbody>
+          </table>
+          <p class="auction-explainer" id="auction-conflict"></p>
+          <p>These bids are sample data. The prover sees the full matrix. The public receipt includes commitments and winning prices, and observers may infer bounds on other bids.</p>
+        </article>
+        <article class="panel auction-card" id="auction-award" hidden>
+          <header class="auction-card-head"><h2>Winning assignment</h2><span class="unit" id="auction-total"></span></header>
+          <ul class="auction-awards" id="auction-awards"></ul>
+          <div class="view-actions">
+            <button class="button primary" type="button" id="auction-prove">Generate and verify proof</button>
+          </div>
+          <p id="auction-proof-status" role="status"></p>
+          <div class="auction-verdicts" id="auction-verdicts" hidden>
+            <p><strong>Original proof verified</strong><a class="panel-link" href="#receipt">View public receipt <span aria-hidden="true">↗</span></a></p>
+            <p><strong>Changed payout rejected</strong><span id="auction-change"></span></p>
+          </div>
+          <div class="view-actions" id="auction-chain-action" hidden>
+            <button class="button secondary" type="button" id="auction-chain">View NEAR settlement evidence</button>
+          </div>
+        </article>
+      </div>
+
+      <article class="panel auction-card chain-evidence" id="chain-evidence" hidden>
+        <header class="auction-card-head"><h2>NEAR settlement</h2><span class="unit" id="chain-network"></span></header>
+        <p id="chain-status" role="status"></p>
+        <div id="chain-report" hidden>
+          <dl class="chain-stats" id="chain-stats"></dl>
+          <ul class="auction-awards" id="chain-transactions"></ul>
+          <a class="panel-link" href="assets/chain-run.json" download>Download run report <span aria-hidden="true">↓</span></a>
+        </div>
+      </article>
+    </section>
+
+    <section id="studio" class="view" aria-labelledby="studio-heading" hidden>
+      <div class="masthead">
+        <div class="mast-copy"><p class="eyebrow">ZERO-KNOWLEDGE PROCUREMENT</p><h1 id="studio-heading">Bid matrix<span>.</span></h1><p class="intro">Find the lowest-cost assignment and prove it without exposing the unused bids.</p></div>
+      </div>
+      <div class="studio-grid">
+        <article class="panel bid-panel">
+          <header class="panel-head"><div><h2>Provider bids</h2><p>Each provider can win one job.</p></div><span class="unit">milliNEAR</span></header>
+          <form id="bid-form">
+            <div class="bid-actions">
+              <label for="scenario" class="sr-only">Load a bid scenario</label>
+              <select id="scenario"><option value="classic">Competing for two jobs</option><option value="tie">Tied assignments</option><option value="diagonal">Independent winners</option><option value="custom" disabled>Custom bids</option></select>
+              <button id="visibility" class="button secondary" type="button" aria-pressed="false">Hide bids</button>
+            </div>
+            <table id="bid-matrix"><caption class="sr-only">Editable bids in milliNEAR</caption><thead><tr><th scope="col">Provider</th><th scope="col">Job 01</th><th scope="col">Job 02</th><th scope="col">Job 03</th></tr></thead><tbody id="bid-rows"></tbody></table>
+            <div class="panel-actions"><button class="button primary" id="generate" type="submit">Generate proof <span aria-hidden="true">↗</span></button><p id="bid-status" class="inline-status" role="status"></p></div>
+          </form>
+        </article>
+        <article class="panel outcome-panel">
+          <header class="panel-head"><div><h2>Winning assignment</h2><p id="assignment-status">Calculated from current bids</p></div><span class="tag" id="proof-tag">Awaiting proof</span></header>
+          <div class="total"><span id="total">13</span><div>milliNEAR<small>Minimum total</small></div></div>
+          <div id="assignments" class="assignments" aria-live="polite"></div>
+          <p id="tie-note" class="footnote" hidden>Several assignments have the same total. The circuit uses provider order to break ties.</p>
+          <a id="go-verifier" class="panel-link" href="#verify" hidden>Open verifier <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <a class="panel-link" href="#compare">Compare assignments <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section id="compare" class="view" aria-labelledby="compare-heading" hidden>
+      <div class="view-head"><div class="mast-copy"><p class="eyebrow">PRIVATE BID ANALYSIS</p><h1 id="compare-heading">Compare assignments<span>.</span></h1><p class="intro">Review all six possible assignments, ordered by total cost.</p></div></div>
+      <div class="panel comparison">
+        <div class="panel-head"><h2>Assignment rankings</h2><a class="panel-link" href="#studio">Back to bid matrix <span aria-hidden="true">↗</span></a></div>
+        <p id="comparison-status" hidden></p>
+        <ol id="comparison-list" class="comparison-list" aria-label="Assignments ranked by total cost"></ol>
+      </div>
+    </section>
+
+    <section id="verify" class="view" aria-labelledby="verify-heading" hidden>
+      <div class="view-head"><div class="mast-copy"><p class="eyebrow">GROTH16 PROOF</p><h1 id="verify-heading">Verify the award<span>.</span></h1><p class="intro">Check that the public assignment and each payout match the proof.</p></div></div>
+      <div class="panel verify-panel">
+        <div class="verify-actions">
+          <h2>Check a receipt</h2>
+          <p>Use the latest proof or load a saved receipt.</p>
+          <div class="button-row"><button type="button" id="verify-receipt" class="button primary" disabled>Verify receipt <span aria-hidden="true">↗</span></button><button type="button" id="import" class="button secondary">Import JSON</button><button type="button" id="paste-receipt" class="button secondary">Paste JSON</button><input id="file" type="file" accept=".json,application/json" hidden></div>
+          <label class="switch"><input type="checkbox" id="tamper" disabled><span>Test a changed payout</span></label>
+          <div id="test-payout" class="test-payout" hidden>
+            <label for="test-job">Job<select id="test-job"><option value="0">Job 01</option><option value="1">Job 02</option><option value="2">Job 03</option></select></label>
+            <label for="test-amount">New payout (milliNEAR)<input id="test-amount" type="number" min="1" step="1" inputmode="numeric" required></label>
+            <p id="test-original"></p>
+          </div>
+          <div class="view-links">
+            <a class="panel-link" href="#receipt">Inspect public receipt <span aria-hidden="true">↗</span></a>
+            <a class="panel-link" href="#history">View verification history <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="verify-result" id="verify-result" data-state="idle" aria-live="polite" aria-atomic="true"><div class="result-symbol" id="result-symbol" aria-hidden="true">◇</div><div><h2 id="result-title">Waiting for a receipt</h2><p id="result-detail">Generate a proof or import a saved receipt.</p></div></div>
+      </div>
+    </section>
+
+    <section id="history" class="view" aria-labelledby="history-heading" hidden>
+      <div class="view-head"><div class="mast-copy"><p class="eyebrow">PROOF ACTIVITY</p><h1 id="history-heading">Verification history<span>.</span></h1><p class="intro">Review the latest 10 proof checks from this session.</p></div></div>
+      <div class="panel history">
+        <header class="panel-head"><h2>Recent proof checks</h2><button id="clear-history" class="button secondary" type="button" hidden>Clear history</button></header>
+        <fieldset class="history-filters" id="history-filters" hidden>
+          <legend class="sr-only">Filter verification history</legend>
+          <label><input type="radio" name="history-filter" value="all" checked><span>All</span></label>
+          <label><input type="radio" name="history-filter" value="valid"><span>Verified</span></label>
+          <label><input type="radio" name="history-filter" value="invalid"><span>Rejected</span></label>
+        </fieldset>
+        <p id="empty-history" role="status">Generate or verify a proof to see it here.</p>
+        <ol id="history-list" aria-label="Recent proof checks" hidden></ol>
+        <a id="history-verifier" class="panel-link" href="#verify">Open verifier <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+
+    <section id="receipt" class="view" aria-labelledby="receipt-heading" hidden>
+      <div class="view-head"><div class="mast-copy"><p class="eyebrow">PUBLIC INPUTS</p><h1 id="receipt-heading">Proof receipt<span>.</span></h1><p class="intro">Share the proof, commitments, and winning payouts. The receipt contains no unused bids.</p></div></div>
+      <article class="panel receipt-sheet">
+        <header class="panel-head"><h2>Receipt data</h2><div class="receipt-actions"><button type="button" id="copy-receipt" class="button secondary" disabled>Copy JSON</button><button type="button" id="download" class="button primary" disabled>Download JSON <span aria-hidden="true">↓</span></button></div></header>
+        <p id="receipt-source" hidden></p>
+        <p id="receipt-status" role="status" hidden></p>
+        <p id="empty-receipt">Generate a proof in the <a href="#studio">bid matrix</a> or import a saved receipt in the <a href="#verify">verifier</a>.</p>
+        <div id="receipt-details" hidden><dl id="public-inputs"></dl></div>
+      </article>
+    </section>
+
+    <section id="protocol" class="view" aria-labelledby="protocol-heading" hidden>
+      <div class="view-head"><div class="mast-copy"><p class="eyebrow">CIRCOM / GROTH16 / NEAR</p><h1 id="protocol-heading">From bid to proof<span>.</span></h1></div></div>
+      <ol class="protocol-list">
+        <li><span aria-hidden="true">01</span><div><h2>Commit the bids</h2><p>The browser salts each provider’s bids and hashes them into a Poseidon commitment.</p></div></li>
+        <li><span aria-hidden="true">02</span><div><h2>Prove the minimum</h2><p>The circuit checks all six assignments and binds each winning payout to its original bid.</p></div></li>
+        <li><span aria-hidden="true">03</span><div><h2>Verify before settling</h2><p>The NEAR contract prototype verifies the proof before releasing escrow. This workspace generates and verifies proofs in the browser.</p></div></li>
+      </ol>
+      <div class="protocol-actions">
+        <a class="button primary" href="#verify">Open verifier <span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="assets/verification-key.json" download="sealed-assignment-verification-key.json">Download verification key <span aria-hidden="true">↓</span></a>
+        <a class="panel-link" href="notices.txt">Open-source notices <span aria-hidden="true">↗</span></a>
+      </div>
+    </section>
+    <section id="login" class="view login-view" aria-labelledby="login-heading">
+      <div class="panel login-card">
+        <span class="login-mark mark" aria-hidden="true"></span>
+        <h1 id="login-heading">Sign in<span>.</span></h1>
+        <p class="intro">Sign in with the ChatGPT account that has access to Sealed Assignment.</p>
+        <div class="view-actions">
+          <a class="button primary" id="hosted-sign-in" href="/signin-with-chatgpt?return_to=%2F%3Fentry%3Dcomplete%23home" target="_top" hidden>Continue with ChatGPT <span aria-hidden="true">↗</span></a>
+          <button class="button primary" id="local-enter" type="button" hidden>Enter local demo <span aria-hidden="true">↗</span></button>
+        </div>
+        <p id="local-login-note" hidden>Preview only. Your local session uses sample data and requires no account.</p>
+        <p id="static-login-note" hidden>To try this source build, serve the project locally and choose Enter local demo.</p>
+      </div>
+    </section>
+  </main>
+  <dialog id="paste-dialog" aria-labelledby="paste-heading">
+    <form id="paste-form">
+      <h2 id="paste-heading">Paste a receipt</h2>
+      <label for="receipt-json">Public receipt JSON</label>
+      <textarea id="receipt-json" rows="7" maxlength="25000" required spellcheck="false"></textarea>
+      <p id="paste-status" role="status"></p>
+      <div class="button-row"><button class="button primary" type="submit">Verify and load</button><button id="close-paste" class="button secondary" type="button">Cancel</button></div>
+    </form>
+  </dialog>
+  <div id="cursor-glow" aria-hidden="true" hidden></div>
+</body>
+</html>

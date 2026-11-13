@@ -1,0 +1,21 @@
+{
+  "name": "sealed-assignment",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "setup": "node scripts/setup.mjs",
+    "demo": "node scripts/demo.mjs",
+    "test": "node --test scripts/protocol.test.mjs",
+    "sandbox": "node scripts/sandbox.mjs"
+  },
+  "dependencies": {
+    "circom2": "0.2.23",
+    "circomlib": "2.0.5",
+    "circomlibjs": "0.1.7",
+    "near-api-js": "5.1.1",
+    "near-workspaces": "5.0.0",
+    "snarkjs": "0.7.6"
+  }
+}

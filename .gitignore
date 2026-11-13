@@ -1,0 +1,4 @@
+node_modules/
+build/
+contract/target/
+contract/src/verification-key.bin

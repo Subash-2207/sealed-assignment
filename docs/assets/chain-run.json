@@ -1,0 +1,42 @@
+{
+  "format": "sealed-assignment-chain-run-v1",
+  "network": "testnet",
+  "recordedAt": "2026-11-13T14:12:48.882Z",
+  "account": "dev-42509-23072.sealed-lab-2d6ed6d845c5.testnet",
+  "market": "128569632092106590491870984941016921313",
+  "awards": [
+    {
+      "provider": "bravo.sealed-lab-2d6ed6d845c5.testnet",
+      "amount": "4000000000000000000000"
+    },
+    {
+      "provider": "alpha.sealed-lab-2d6ed6d845c5.testnet",
+      "amount": "3000000000000000000000"
+    },
+    {
+      "provider": "charlie.sealed-lab-2d6ed6d845c5.testnet",
+      "amount": "6000000000000000000000"
+    }
+  ],
+  "escrowMilliNear": 30,
+  "buyerRefundMilliNear": 17,
+  "settlementGasBurnt": "35530041273939",
+  "changedPayoutRejected": true,
+  "replayRejected": true,
+  "allCreditsWithdrawn": true,
+  "transactions": {
+    "commitments": [
+      "DSe5ivmYxmQ6eWXec1m1WmyH3zYLpws6d7FJ85J5oNvA",
+      "4t2mjkxgxroEzHab9RK2AzjXuddwb144J532KLiPMB4b",
+      "HY93EGm9mZVM6n9SN16G56WzbwxZrUMdSL8qntX4HJTv"
+    ],
+    "rejected": "7EcUCoaipNafsxSz1c7Z2aBKxczT2Npi3AZxM8HTDgZf",
+    "settlement": "8fMtkv2pKiJTnhdN4DXR2jsjThVcWSd4QxgKWY2VZXng",
+    "withdrawals": [
+      "EPVgDPKgtCew3HnhYxtMmFk246nQFgXfmEZV8sg4LcpD",
+      "FQWbRZmL51VNQj2yxYs3dNFyiCBZDPHavKwsu1DmzgU9",
+      "ARMcnZjg5EaAxwCWud5JSvHcxsdTvmX6YyFLeDAaqsyo",
+      "CnXiMqM5Qidquh9x2WWmx7rZQAbyCnEsLGzdSrAAqv6d"
+    ]
+  }
+}

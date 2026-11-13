@@ -1,0 +1,12 @@
+Sealed Assignment | Proof Studio
+
+Browser proof engine: snarkjs 0.7.6, Copyright 2018 0KIMS association.
+License: GNU GPL v3. See gpl-3.0.txt in this site.
+Source: https://github.com/iden3/snarkjs/tree/v0.7.6
+
+Poseidon constants and reference round schedule: circomlibjs 0.1.7.
+License: GNU GPL v3. See gpl-3.0.txt in this site.
+Source: https://www.npmjs.com/package/circomlibjs/v/0.1.7
+
+The proof assets use disposable demo setup parameters. The browser studio
+generates cryptographic proofs and leaves settlement to the NEAR contract prototype.
