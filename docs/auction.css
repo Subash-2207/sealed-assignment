@@ -1,9 +1,17 @@
-body:not([data-view='home'], [data-view='login']) .backdrop { opacity: .24; }
+body:not([data-view='home'], [data-view='login']) .backdrop { opacity: .55; }
 body[data-view='login'] #workspace { margin-left: 0; }
-body[data-view='login'] .robot-screen { left: 29%; }
 body[data-view='login'] .login-view { justify-items: end; }
-body[data-view='login'] .backdrop::after { background: linear-gradient(270deg, var(--paper), transparent 66%); }
+body[data-view='login'] .login-card { width: min(41%, 450px); }
+body[data-view='login'] .backdrop::after {
+  background: radial-gradient(ellipse at center, transparent 3%, var(--paper) 45%);
+}
 body[data-view='login'] #cursor-glow { display: none; }
+#sign-in-methods { margin-top: 18px; padding-top: 13px; border-top: 1px solid var(--line); }
+#sign-in-methods .provider-link { min-height: 44px; border-radius: 999px; padding-inline: 16px; }
+#sign-in-methods > p { margin-top: 10px; }
+#sign-in-methods details { margin-top: 11px; }
+#sign-in-methods summary { cursor: pointer; color: var(--ink); font-size: 13px; font-weight: 650; }
+#sign-in-methods details p { margin-top: 8px; }
 
 .auction { display: grid; gap: 18px; }
 .auction-hero { padding: clamp(24px, 4vw, 48px); background: linear-gradient(115deg, var(--surface) 64%, var(--award)); }
@@ -39,9 +47,12 @@ body[data-view='login'] #cursor-glow { display: none; }
 .chain-stats dd { overflow-wrap: anywhere; font-weight: 700; }
 
 @media (max-width: 850px) { .auction-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  body[data-view='login'] .login-view { justify-items: center; align-items: start; padding-top: calc(44svh + 36px); }
+  body[data-view='login'] .login-card { width: min(100%, 450px); }
+}
 @media (max-width: 620px) {
   body[data-view='login'] { padding-bottom: 0; }
-  body[data-view='login'] .robot-screen { left: 50%; top: 44%; }
   body[data-view='login'] .login-view { min-height: calc(100svh - 78px); justify-items: center; }
   .routes { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .routes a { font-size: 10px; }

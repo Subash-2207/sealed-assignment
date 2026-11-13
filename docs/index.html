@@ -11,8 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="auction.css">
+  <link rel="stylesheet" href="styles.css?v=centered-robot">
+  <link rel="stylesheet" href="auction.css?v=centered-robot">
   <script src="backdrop.js" defer></script>
   <script type="module" src="app.js"></script>
 </head>
@@ -224,10 +224,18 @@
       <div class="panel login-card">
         <span class="login-mark mark" aria-hidden="true"></span>
         <h1 id="login-heading">Sign in<span>.</span></h1>
-        <p class="intro">Sign in with the ChatGPT account that has access to Sealed Assignment.</p>
+        <p class="intro">Sign in with the account that has access to this Proof Studio.</p>
         <div class="view-actions">
           <a class="button primary" id="hosted-sign-in" href="/signin-with-chatgpt?return_to=%2F%3Fentry%3Dcomplete%23home" target="_top" hidden>Continue with ChatGPT <span aria-hidden="true">↗</span></a>
           <button class="button primary" id="local-enter" type="button" hidden>Enter local demo <span aria-hidden="true">↗</span></button>
+        </div>
+        <div id="sign-in-methods" hidden>
+          <a class="button secondary provider-link" href="/signin-with-chatgpt?return_to=%2F%3Fentry%3Dcomplete%23home" target="_top">Use Google via ChatGPT <span aria-hidden="true">↗</span></a>
+          <p>In the ChatGPT sign-in screen, choose the method linked to your account: Google, Apple, Microsoft, or email.</p>
+          <details>
+            <summary>Phone sign-in availability</summary>
+            <p>Use the phone option if ChatGPT offers it for your account.</p>
+          </details>
         </div>
         <p id="local-login-note" hidden>Preview only. Your local session uses sample data and requires no account.</p>
         <p id="static-login-note" hidden>To try this source build, serve the project locally and choose Enter local demo.</p>

@@ -51,6 +51,7 @@ if (hosted && entryUrl.searchParams.get('entry') === 'complete') {
   history.replaceState(null, '', entryUrl);
 }
 $('hosted-sign-in').hidden = !hosted;
+$('sign-in-methods').hidden = !hosted;
 $('local-enter').hidden = !localPreview;
 $('local-login-note').hidden = !localPreview;
 $('static-login-note').hidden = hosted || localPreview;

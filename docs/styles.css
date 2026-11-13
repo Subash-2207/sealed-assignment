@@ -106,11 +106,12 @@ button:disabled { opacity: .46; }
 .robot-screen {
   position: absolute;
   top: 50%;
-  left: 70%;
-  width: max(140vw, 177.78dvh);
+  left: 50%;
+  width: max(14vw, 17.778dvh);
   aspect-ratio: 16 / 9;
   transform: translate(-50%, -50%);
   container-type: inline-size;
+  mask-image: radial-gradient(ellipse 52% 66% at center, #000 62%, transparent 100%);
 }
 .robot-screen video { display: block; width: 100%; height: 100%; object-fit: contain; }
 .robot-gaze {
@@ -286,7 +287,6 @@ dialog textarea { display: block; width: 100%; resize: vertical; color: var(--in
   .masthead, .view-head { min-height: 196px; }
   .mast-copy { padding-inline: 14px; }
   .masthead .intro { max-width: 205px; font-size: 13px; }
-  .robot-screen { left: 50%; }
   .overview, .login-view { min-height: calc(100svh - 200px); align-items: end; }
   .overview h1 { font-size: clamp(47px, 12vw, 68px); }
   .overview-copy { padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
