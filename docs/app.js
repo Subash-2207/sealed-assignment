@@ -1,5 +1,6 @@
 import { generateProof, maxQuote, parseReceipt, permutations, providers, scenarios, solve, validQuote, verifyProof } from './proof.js';
 import { setupAuction } from './auction.js';
+import { setupOverview } from './overview.js';
 
 const $ = id => document.getElementById(id);
 const bids = $('bid-rows');
@@ -29,12 +30,16 @@ const routes = [...document.querySelectorAll('[data-route]')].map(link => ({
   label: link.textContent.trim(),
 }));
 const loginRoute = { id: 'login', view: $('login'), label: 'Sign in' };
-const localPreview = ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname);
 const hosted = location.hostname.endsWith('.chatgpt.site');
 const entryKey = 'sealed-assignment-entered';
 const entryUrl = new URL(location.href);
-let entered = false;
-try { entered = sessionStorage.getItem(entryKey) === 'yes'; } catch {}
+const managed = location.pathname === '/workspace';
+const demoMode = !hosted && !managed && (
+  document.documentElement.hasAttribute('data-public-demo')
+  || ['127.0.0.1', 'localhost', '[::1]'].includes(location.hostname)
+);
+let entered = managed;
+try { if (!managed) entered = sessionStorage.getItem(entryKey) === 'yes'; } catch {}
 
 function markEntered(value) {
   entered = value;
@@ -48,14 +53,17 @@ function markEntered(value) {
 if (hosted && entryUrl.searchParams.get('entry') === 'complete') {
   markEntered(true);
   entryUrl.searchParams.delete('entry');
+  entryUrl.hash = 'home';
   history.replaceState(null, '', entryUrl);
 }
 $('hosted-sign-in').hidden = !hosted;
 $('sign-in-methods').hidden = !hosted;
-$('local-enter').hidden = !localPreview;
-$('local-login-note').hidden = !localPreview;
-$('static-login-note').hidden = hosted || localPreview;
-if (localPreview) $('leave-workspace').textContent = 'Exit demo';
+$('local-enter').hidden = !demoMode;
+$('local-login-note').hidden = !demoMode;
+$('static-login-note').hidden = hosted || demoMode;
+if (demoMode) $('leave-workspace').textContent = 'Exit demo';
+const canLeave = hosted || demoMode || managed;
+const overview = setupOverview(solve(scenarios.classic), providers, canLeave);
 let assignment;
 let receipt;
 let lastProvenBids;
@@ -75,14 +83,15 @@ function showView(focus = false) {
   document.body.dataset.view = active.id;
   const atLogin = active === loginRoute;
   loginRoute.view.hidden = !atLogin;
-  document.querySelector('.rail').hidden = atLogin;
-  $('leave-workspace').hidden = atLogin || !(hosted || localPreview);
+  document.querySelector('.rail').hidden = atLogin || active.id === 'home';
+  $('leave-workspace').hidden = atLogin || !canLeave;
   for (const route of routes) {
     const selected = route === active;
     route.view.hidden = !selected;
     if (selected) route.link.setAttribute('aria-current', 'page');
     else route.link.removeAttribute('aria-current');
   }
+  overview.setActive(active.id === 'home');
   $('current-view').textContent = active.label;
   if (focus) {
     window.scrollTo(0, 0);
@@ -95,9 +104,20 @@ $('local-enter').addEventListener('click', () => {
   location.hash = 'home';
   showView(true);
 });
-$('leave-workspace').addEventListener('click', event => {
+$('leave-workspace').addEventListener('click', async event => {
+  if (managed) {
+    event.preventDefault();
+    try {
+      const response = await fetch('/api/auth/logout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+      if (!response.ok) throw new Error();
+      location.replace('/');
+    } catch {
+      window.alert('Could not sign out. Try again.');
+    }
+    return;
+  }
   markEntered(false);
-  if (!localPreview) return;
+  if (!demoMode) return;
   event.preventDefault();
   // Reload to discard in-memory bids, receipts, and verification history.
   history.replaceState(null, '', '#login');
@@ -106,6 +126,7 @@ $('leave-workspace').addEventListener('click', event => {
 window.addEventListener('hashchange', () => showView(true));
 window.addEventListener('pageshow', event => {
   if (!event.persisted) return;
+  if (managed) return location.reload();
   try { entered = sessionStorage.getItem(entryKey) === 'yes'; } catch {}
   if (!entered) location.reload();
 });

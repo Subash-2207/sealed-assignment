@@ -1,0 +1,92 @@
+/* Extend the scene outside the original frame without scaling its subject. */
+.backdrop {
+  background:
+    radial-gradient(ellipse 54% 67% at var(--scene-center, 54%) 29%, #525050 21%, transparent 95%),
+    radial-gradient(ellipse 54% 42% at var(--scene-center, 54%) 85%, #a4a1a4 22%, transparent 96%),
+    var(--paper);
+}
+
+.robot-screen {
+  /* Feather the frame into the surrounding backdrop, outside the robot. */
+  mask-image:
+    linear-gradient(90deg, transparent, black 18% 69%, transparent 83%),
+    linear-gradient(180deg, transparent, black 3% 97%, transparent);
+  mask-composite: intersect;
+}
+
+body[data-view='login'] .backdrop { --scene-center: 31%; }
+
+body[data-view='login'] .backdrop::after {
+  background: linear-gradient(90deg, transparent 39%, var(--paper) 98%);
+}
+
+body:not([data-view='login']) {
+  --workspace-rail: var(--rail-width);
+  --workspace-bottom: 0px;
+  --workspace-gutter: clamp(14px, 2vw, 30px);
+  --workspace-panel: color-mix(in srgb, var(--sheet) 78%, transparent);
+  --workspace-header: color-mix(in srgb, var(--paper) 80%, transparent);
+  --workspace-hero: color-mix(in srgb, var(--paper) 69%, transparent);
+  --workspace-status: color-mix(in srgb, var(--status-surface) 45%, transparent);
+  --workspace-tint: color-mix(in srgb, var(--paper) 16%, transparent);
+}
+
+[data-theme='dark'] body:not([data-view='login']) {
+  --workspace-panel: color-mix(in srgb, var(--sheet) 59%, transparent);
+  --workspace-header: color-mix(in srgb, var(--paper) 72%, transparent);
+  --workspace-hero: color-mix(in srgb, var(--paper) 52%, transparent);
+  --workspace-status: color-mix(in srgb, var(--status-surface) 35%, transparent);
+  --workspace-tint: color-mix(in srgb, var(--paper) 10%, transparent);
+}
+
+body:not([data-view='login']) .backdrop {
+  inset: 0;
+  container-type: size;
+  opacity: 1;
+}
+
+body:not([data-view='login']) .backdrop::after { background: var(--workspace-tint); }
+
+body:not([data-view='login']) .robot-screen {
+  left: calc((100% + var(--workspace-rail)) / 2);
+  top: calc((100% - var(--workspace-bottom)) / 2);
+  width: min(
+    calc(100cqw - var(--workspace-rail) - 2 * var(--workspace-gutter)),
+    calc((100cqh - var(--workspace-bottom) - 2 * var(--workspace-gutter)) * 16 / 9)
+  );
+}
+
+body:not([data-view='login']) .context {
+  background: var(--workspace-header);
+}
+
+#workspace .view:not(.login-view) :is(.panel, .protocol-list) {
+  background: var(--workspace-panel);
+}
+
+#workspace .view:not(.login-view) :is(.masthead, .view-head, .auction-hero) {
+  background: var(--workspace-hero);
+}
+
+#workspace .view:not(.login-view) .outcome-panel {
+  background: color-mix(in srgb, var(--charcoal) 62%, transparent);
+}
+
+#workspace .view:not(.login-view) .verify-result { background: var(--workspace-status); }
+#workspace .view:not(.login-view) :is(.auction-steps li:not([aria-current])) {
+  --surface: var(--workspace-panel);
+}
+
+@media (max-width: 760px) {
+  body[data-view='login'] .backdrop { --scene-center: 50%; }
+  body[data-view='login'] .backdrop::after {
+    background: linear-gradient(180deg, transparent 29%, var(--paper) 80%);
+  }
+}
+
+@media (max-width: 620px) {
+  body:not([data-view='login']) {
+    --workspace-rail: 0px;
+    --workspace-bottom: calc(112px + env(safe-area-inset-bottom, 0px));
+  }
+}

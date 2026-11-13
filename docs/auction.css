@@ -1,8 +1,16 @@
 body:not([data-view='home'], [data-view='login']) .backdrop { opacity: .24; }
 body[data-view='login'] #workspace { margin-left: 0; }
 body[data-view='login'] .login-view { justify-items: end; }
+body[data-view='login'] .login-card { max-width: 46vw; }
+body[data-view='login'] .robot-screen {
+  /* Match the view's max width, inline padding, and right-aligned card. */
+  --card-start: calc(100% - max(0px, (100% - 1340px) / 2) - clamp(18px, 4vw, 49px) - min(450px, 46vw));
+  left: calc(var(--card-start) / 2);
+  top: calc(50% + 30px);
+  width: min(calc(var(--card-start) * 1.45), 122dvh);
+}
 body[data-view='login'] .backdrop::after {
-  background: linear-gradient(270deg, var(--paper), transparent 48%);
+  background: linear-gradient(90deg, var(--paper), transparent 17% 43%, var(--paper) 69%);
 }
 body[data-view='login'] #cursor-glow { display: none; }
 #sign-in-methods { margin-top: 18px; padding-top: 13px; border-top: 1px solid var(--line); }
@@ -46,9 +54,15 @@ body[data-view='login'] #cursor-glow { display: none; }
 .chain-stats dd { overflow-wrap: anywhere; font-weight: 700; }
 
 @media (max-width: 850px) { .auction-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 760px) {
+  body[data-view='login'] .login-view { min-height: calc(100svh - 78px); justify-items: center; }
+  body[data-view='login'] .login-card { max-width: 100%; }
+  body[data-view='login'] .robot-screen { left: 50%; top: 160px; width: min(110vw, 420px); }
+  body[data-view='login'] .login-view { align-items: start; padding-top: 210px; }
+  body[data-view='login'] .backdrop::after { background: linear-gradient(180deg, transparent 20%, var(--paper) 45%); }
+}
 @media (max-width: 620px) {
   body[data-view='login'] { padding-bottom: 0; }
-  body[data-view='login'] .login-view { min-height: calc(100svh - 78px); justify-items: center; }
   .routes { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .routes a { font-size: 10px; }
   .auction-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }

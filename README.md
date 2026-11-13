@@ -6,7 +6,7 @@ Built for the November 2026 [NEAR Hackathon](https://nearhackathon.com/), with *
 
 ## Try the browser demo
 
-Run `python -m http.server 8080 --directory docs` from the combined repository and open `http://127.0.0.1:8080/`. Choose **Enter local demo**, then **Auction Lab**. Run the sample auction, generate and verify the proof, and open the settlement evidence. The browser creates a fresh proof for each run. The settlement report records a separate run of the same auction against the contract.
+Run `python -m http.server 8080 --directory docs` from the combined repository and open `http://127.0.0.1:8080/`. Choose **Enter demo**, then select **Run sample auction** from Overview. Run the sample auction, generate and verify the proof, and open the settlement evidence. The browser creates a fresh proof for each run. The settlement report records a separate run of the same auction against the contract.
 
 The recorded NEAR testnet run funded 30 milliNEAR of escrow, rejected a changed payout, paid 13 milliNEAR across three providers, and returned 17 milliNEAR to the buyer. See the [rejected transaction](https://testnet.nearblocks.io/txns/7EcUCoaipNafsxSz1c7Z2aBKxczT2Npi3AZxM8HTDgZf), the [successful settlement](https://testnet.nearblocks.io/txns/8fMtkv2pKiJTnhdN4DXR2jsjThVcWSd4QxgKWY2VZXng), and [all transaction hashes](docs/assets/chain-run.json).
 
